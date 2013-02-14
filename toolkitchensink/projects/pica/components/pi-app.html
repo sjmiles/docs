@@ -1,0 +1,83 @@
+<!--
+/*
+ * Copyright 2012 The Toolkitchen Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style
+ * license that can be found in the LICENSE file.
+ */
+-->
+<element name="pi-app" extends="g-app" on-keyup="keyupHandler">
+  <link rel="stylesheet" href="css/pi-app.css" />
+  <link rel="components" href="../../../toolkit/components/g-component.html">
+  <link rel="components" href="../../../toolkit/components/g-app.html"/>
+  <link rel="components" href="../../../toolkit/components/g-panels.html"/>
+  <link rel="components" href="../../../toolkit/components/g-menu-item.html"/>
+  <link rel="components" href="../../../toolkit/components/g-ribbon.html"/>
+  <link rel="components" href="pi-toolbar.html"/>
+  <link rel="components" href="pi-feed-viewer.html"/>
+  <link rel="components" href="pi-home.html"/>
+  <link rel="components" href="pi-accounts.html"/>
+  <link rel="components" href="pi-accounts-model.html"/>
+  <template>
+    <g-panels id="panels" selected="{{selectedPanel}}" transition="flow" autoselect>
+      <g-ribbon id="ribbon" label="Pica" selected="{{ribbonSelected}}" on-activate="showMain">
+        <g-menu-item name="Home" src="../images/ribbon_home_lightreg.png">Home</g-menu-item>
+        <g-menu-item name="Topics" src="../images/ribbon_topics_lightreg.png">Topics</g-menu-item>
+        <g-menu-item name="Accounts" src="../images/ribbon_accounts_lightreg.png">Accounts</g-menu-item>
+      </g-ribbon>
+      <div id="main" on-tap="showMain">
+        <pi-toolbar label="{{toolbarLabel}}" layout="{{layout}}" panel="{{selectedPanel}}" subpanel="{{topicsSelectedPanel}}"
+            on-nav="navClick" on-source="toggleSource" on-refresh="refresh"></pi-toolbar>
+        <g-panels id="contentPanels" selected="{{ribbonSelected}}">
+          <pi-home id="Home" stocks="{{$.accountsModel.stocks}}"></pi-home>
+          <pi-feed-viewer id="Topics" topics="{{$.accountsModel.topics}}" selectedtopic="{{selectedTopic}}" panel="{{topicsSelectedPanel}}" layout="{{layout}}"></pi-feed-viewer>
+          <pi-accounts id="Accounts" accounts="{{$.accountsModel}}"></pi-accounts>
+        </g-panels>
+      </div>
+      <g-ribbon id="source" class="right" on-tap="toggleSource"></g-ribbon>
+    </g-panels>
+    <pi-accounts-model id="accountsModel"></pi-accounts-model>
+  </template>
+  <script>
+    var ESCAPE_KEY = 27;
+    
+    this.component({
+      ribbonSelected: 'Topics',
+      layout: 'grid',
+      selectedPanel: 'main',
+      ready: function() {
+        this.topicsSelectedPanelChanged();
+      },
+      navClick: function() {
+        if (this.topicsSelectedPanel == 'topics') {
+          this.toggleNav();
+        } else {
+          this.$.Topics.previous();
+        }
+      },
+      toggleNav: function() {
+        this.$.panels.toggleBetween('ribbon', 'main');
+      },
+      toggleSource: function() {
+        this.$.panels.toggleBetween('main', 'source');
+      },
+      showMain: function() {
+        this.selectedPanel = 'main';
+      },
+      refresh: function() {
+        this.$.Topics.refresh();
+      },
+      ribbonSelectedChanged: function() {
+        this.topicsSelectedPanelChanged();
+      },
+      topicsSelectedPanelChanged: function() {
+        this.toolbarLabel = this.topicsSelectedPanel == 'topics' ?
+            this.ribbonSelected : this.selectedTopic.title;
+      },
+      keyupHandler: function(e) {
+        if (e.keyCode == ESCAPE_KEY) {
+          this.navClick();
+        }
+      }
+    });
+  </script>
+</element>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Toolkit component reference</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Toolkit platform code -->
+    <script src="toolkitchensink/toolkit/platform/platform.js"></script>
+
+    <!-- Load any components listed in YAML front matter. -->
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-ajax.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-app.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-component.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-icon.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-icon-button.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-jsonp.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-menu-button.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-menu-item.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-menu.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-overlay.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-panels.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-ratings.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-ribbon.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-selection.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-tabs.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-togglebutton.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-toolbar.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-xhr.html">
+      
+
+    <!-- Load any style sheets listed in YAML front matter. -->
+      
+
+    <style type="text/css">
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+    }
+    .sidebar-nav {
+      padding: 9px 0;
+    }
+
+    </style>
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!--     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="css/pygments/default.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Code to change "active" style on selected left-hand navigation menu item. -->
+<script>
+  $(document).ready(function () {
+      $('ul.nav > li > a[href="' + document.location.pathname.substr(document.location.pathname.lastIndexOf("/")+1, document.location.pathname.length) + '"]').parent().addClass('active');
+    });
+</script>
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="index.html#">Toolkitchen Project</a>
+          <div class="nav-collapse collapse">
+<!--             <p class="navbar-text pull-right">
+              Logged in as <a href="http://twitter.github.com/bootstrap/examples/fluid.html#" class="navbar-link">Username</a>
+            </p> -->
+<!--
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="discuss.html">Discuss</a></li>
+            </ul>
+-->
+          <ul class="nav">
+  <li><a href="discuss.html">Discuss</a></li>
+</ul>
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+    <div class="well sidebar-nav affix">
+        <ul class="nav nav-list">
+            <li class="nav-header">Getting Started
+            </li>
+            <li>
+                <a href="index.html">Introduction</a>
+            </li>
+            <li>
+                <a href="getting-the-code.html">Get the code</a>
+            </li>
+            <li>
+                <a href="getting-started.html">Get started</a>
+            </li>
+            <li class="nav-header">Components
+            </li><!-- <li><a href="components.html">About Toolkit components</a></li> -->
+            <li>
+                <a href="toolkit-kernel-explainer.html">Toolkit kernel</a>
+<!--             </li>
+            <li>
+                <a href="component-reference.html">Component reference</a>
+            </li> -->
+            <li class="nav-header">More information
+            </li>
+            <li>
+                <a href="runtime-config.html">Runtime configuration options</a>
+            </li>
+            <li>
+                <a href="shadow-dom-shim.html">About the Shadow DOM shim</a>
+            </li>
+        </ul>
+    </div><!--well -->
+</div>
+        <div class="span7">
+            <h1>Toolkit component reference</h1>
+            <hr>
+            <h2>Core components</h2>
+
+<h3>g-component</h3>
+
+<p>The canonical component from which all other Toolkit components extend. You load this component like any other, but you never actually instantiate it.</p>
+
+<h2>UI components</h2>
+
+<h3>g-icon-button</h3>
+
+<h4>Example</h4>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;g</span><span class="na">-icon-button</span> 
+    <span class="na">active=</span><span class="s">&quot;true&quot;</span> 
+    <span class="na">src=</span><span class="s">&quot;toolkitchensink/toolkit/workbench/images/add.png&quot;</span><span class="nt">&gt;</span>
+<span class="err">&lt;</span>/g-icon-button&gt;
+<span class="nt">&lt;g</span><span class="na">-icon-button</span> 
+    <span class="na">active=</span><span class="s">&quot;true&quot;</span> 
+    <span class="na">src=</span><span class="s">&quot;toolkitchensink/toolkit/workbench/images/email.png&quot;</span><span class="nt">&gt;</span>
+<span class="err">&lt;</span>/g-icon-button&gt;
+</code></pre></div>
+
+<p><g-icon-button active="true" src="toolkitchensink/toolkit/workbench/images/add.png"></g-icon-button>
+<g-icon-button active="true" src="toolkitchensink/toolkit/workbench/images/email.png"></g-icon-button></p>
+
+<h3>g-icon</h3>
+
+<p>The g-icon component </p>
+
+<p><g-icon active="true" src="toolkitchensink/toolkit/workbench/images/add.png"></g-icon>
+<g-icon active="true" src="toolkitchensink/toolkit/workbench/images/email.png"></g-icon></p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;g</span><span class="na">-icon</span> 
+    <span class="na">active=</span><span class="s">&quot;true&quot;</span> 
+    <span class="na">src=</span><span class="s">&quot;toolkitchensink/toolkit/workbench/images/add.png&quot;</span><span class="nt">&gt;</span>
+<span class="err">&lt;</span>/g-icon&gt;
+<span class="nt">&lt;g</span><span class="na">-icon</span> <span class="na">src=</span><span class="s">&quot;toolkitchensink/toolkit/workbench/images/email.png&quot;</span><span class="nt">&gt;</span><span class="err">&lt;</span>/g-icon&gt;
+</code></pre></div>
+
+<h3>g-menu-button</h3>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;g</span><span class="na">-toolbar</span> <span class="na">class=</span><span class="s">&quot;responsive&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;div&gt;</span>toggle menubutton:<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;g</span><span class="na">-menu-button</span> <span class="na">src=</span><span class="s">&quot;toolkitchensink/toolkit/workbench/images/add.png&quot;</span> <span class="na">selected=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;g</span><span class="na">-menu-item</span> <span class="na">src=</span><span class="s">&quot;toolkitchensink/toolkit/workbench/images/edit_page.png&quot;</span><span class="nt">&gt;</span>Post a Comment<span class="err">&lt;</span>/g-menu-item&gt;
+  <span class="nt">&lt;g</span><span class="na">-menu-item</span> <span class="na">src=</span><span class="s">&quot;toolkitchensink/toolkit/workbench/images/chat.png&quot;</span><span class="nt">&gt;</span>Share Link<span class="err">&lt;</span>/g-menu-item&gt;
+  <span class="nt">&lt;g</span><span class="na">-menu-item</span> <span class="na">src=</span><span class="s">&quot;toolkitchensink/toolkit/workbench/images/email.png&quot;</span><span class="nt">&gt;</span>Email Link<span class="err">&lt;</span>/g-menu-item&gt;
+  <span class="nt">&lt;g</span><span class="na">-menu-item</span> <span class="na">src=</span><span class="s">&quot;toolkitchensink/toolkit/workbench/images/favorite.png&quot;</span><span class="nt">&gt;</span>Add to Favorites<span class="err">&lt;</span>/g-menu-item&gt;
+<span class="err">&lt;</span>/g-menu-button&gt;
+<span class="err">&lt;</span>/g-toolbar&gt;
+</code></pre></div>
+
+<!-- <g-toolbar class="responsive">
+<div>toggle menubutton:</div>
+<g-menu-button src="toolkitchensink/toolkit/workbench/images/add.png" selected="0">
+  <g-menu-item src="toolkitchensink/toolkit/workbench/images/edit_page.png">Post a Comment</g-menu-item>
+  <g-menu-item src="toolkitchensink/toolkit/workbench/images/chat.png">Share Link</g-menu-item>
+  <g-menu-item src="toolkitchensink/toolkit/workbench/images/email.png">Email Link</g-menu-item>
+  <g-menu-item src="toolkitchensink/toolkit/workbench/images/favorite.png">Add to Favorites</g-menu-item>
+</g-menu-button>
+</g-toolbar> -->
+
+<h3>g-menu-item</h3>
+
+<h4>Example</h4>
+
+<p><g-menu-item src="toolkitchensink/toolkit/workbench/images/edit_page.svg">Post a Comment</g-menu-item></p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;g</span><span class="na">-menu-item</span> <span class="na">src=</span><span class="s">&quot;toolkitchensink/toolkit/workbench/images/edit_page.svg&quot;</span><span class="nt">&gt;</span>Post a Comment<span class="err">&lt;</span>/g-menu-item&gt;
+</code></pre></div>
+
+<h3>g-menu</h3>
+
+<p><g-menu selected="0">
+    <g-menu-item src="toolkitchensink/toolkit/workbench/images/edit_page.png">Post a Comment</g-menu-item>
+    <g-menu-item src="toolkitchensink/toolkit/workbench/images/chat.png">Share Link</g-menu-item>
+    <g-menu-item src="toolkitchensink/toolkit/workbench/images/email.png">Email Link</g-menu-item>
+    <g-menu-item src="toolkitchensink/toolkit/workbench/images/favorite.png">Add to Favorites</g-menu-item>
+</g-menu></p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;g</span><span class="na">-menu</span> <span class="na">selected=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;g</span><span class="na">-menu-item</span> <span class="na">src=</span><span class="s">&quot;images/edit_page.svg&quot;</span><span class="nt">&gt;</span>Post a Comment<span class="err">&lt;</span>/g-menu-item&gt;
+  <span class="nt">&lt;g</span><span class="na">-menu-item</span> <span class="na">src=</span><span class="s">&quot;images/chat.svg&quot;</span><span class="nt">&gt;</span>Share Link<span class="err">&lt;</span>/g-menu-item&gt;
+  <span class="nt">&lt;g</span><span class="na">-menu-item</span> <span class="na">src=</span><span class="s">&quot;images/email.svg&quot;</span><span class="nt">&gt;</span>Email Link<span class="err">&lt;</span>/g-menu-item&gt;
+  <span class="nt">&lt;g</span><span class="na">-menu-item</span> <span class="na">src=</span><span class="s">&quot;images/favorite.svg&quot;</span><span class="nt">&gt;</span>Add to Favorites<span class="err">&lt;</span>/g-menu-item&gt;
+<span class="err">&lt;</span>/g-menu&gt;
+</code></pre></div>
+
+<h3>g-overlay</h3>
+
+<h3>g-panel</h3>
+
+<h3>g-ratings</h3>
+
+<h3>g-ribbon</h3>
+
+<h3>g-selection</h3>
+
+<h3>g-selector</h3>
+
+<h3>g-tabs</h3>
+
+<h3>g-togglebutton</h3>
+
+<h3>g-toolbar</h3>
+
+<h2>Data components</h2>
+
+<hr>
+
+<h3>g-ajax</h3>
+
+<p><g-ajax auto url="http://gdata.youtube.com/feeds/api/videos/" 
+        params='{"alt":"json", "q":"chrome"}'
+        handleAs="json">
+</g-ajax>
+<template iterate="response.feed.entry">
+  <div>}}</div>
+</template>
+<script>
+  document.addEventListener(&#39;WebComponentsReady&#39;, function() {
+    var ajax = document.querySelector(&quot;g-ajax&quot;);
+    ajax.addEventListener(&quot;response&quot;, 
+      function(inEvent) {
+        document.body.model = {
+          response: inEvent.detail.response
+        };
+      }
+    );
+  });
+</script></p>
+
+<h3>g-jsonp</h3>
+
+<h3>g-xhr</h3>
+
+        </div>
+      </div><!--/row-->
+      <hr>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./index_files/jquery.js"></script>
+    <script src="./index_files/bootstrap-scrollspy.js"></script>
+</body></html>

@@ -1,0 +1,32 @@
+<!--
+Copyright 2012 The Toolkitchen Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<element name="x-coolclock">
+  <script src="coolclock.js"></script>
+  <script src="moreskins.js"></script>
+  <link rel="components" href="../../toolkit/components/g-component.html">
+  <template>
+    <span id="clock">
+    </span>
+  </template>
+  <script>
+    this.component({
+      ready: function() {
+        // TODO(sorvell): create the canvas element manually becase ios 
+        // does not render the canvas element if it is not created in the
+        // main document (component templates are created in a 
+        // different document). See:
+        // https://bugs.webkit.org/show_bug.cgi?id=109073.
+        var c = document.createElement('canvas');
+        c.classList.add('CoolClock:Babosa::noSeconds');
+        this.$.clock.appendChild(c);
+      }
+    });
+    window.addEventListener("WebComponentsReady", function() {
+      CoolClock.findAndCreateClocks();
+    });
+    
+  </script>
+</element>

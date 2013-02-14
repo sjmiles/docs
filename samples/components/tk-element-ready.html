@@ -1,0 +1,14 @@
+<element name="tk-element-ready">
+    <template>
+        This is a <b>tk-element</b> with a ready() method. <span id="label">Not ready...</span>
+    </template>
+    <script>
+        this.component({
+          owner: "Daniel",
+          ready: function() {
+            this.$.label.className = "label label-info";
+            this.$.label.innerText = "Ready";
+          }
+        });
+    </script>
+</element>

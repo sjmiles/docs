@@ -1,0 +1,329 @@
+/*
+ * Copyright 2012 The Toolkitchen Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style
+ * license that can be found in the LICENSE file.
+ */
+
+/* base */
+.view {
+  width: 100%;
+}
+
+.pi-item {
+  position: relative;
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-top: 0;
+  border-left: 0;
+  font-size: 15px;
+}
+
+#more {
+  padding: 20px;
+  background: whitesmoke;
+  cursor: pointer;
+  -webkit-user-select: none;
+}
+
+.image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.title {
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.topics .title {
+  display: block;
+  font-size: 18px;
+  color: #333;
+}
+
+.unread-count {
+  display: none;
+  padding-left: 8px;
+  font-weight: normal;
+  color: #aaa;
+}
+
+.topics .unread-count {
+  display: inline-block;
+}
+
+.desc {
+  padding-bottom: 10px;
+  font-size: 12px;
+}
+
+.topics .desc {
+  display: none;
+}
+
+[showing=false] {  
+  display: none;
+}
+
+.image[showing=true] + * + .desc {
+  display: none;
+}
+
+.view:not(.list) .image[showing=false] + .title {
+  font-size: 20px;
+}
+
+.source {
+  position: relative;
+  color: #666;
+  font-size: 11px;
+}
+
+.topics .source {
+  display: none;
+}
+
+.source > * {
+  vertical-align: bottom;
+}
+
+.source-icon {
+  position: relative;
+  padding-right: 4px;
+}
+
+.source-title {
+  font-weight: bold;
+  padding-right: 8px;
+}
+
+/* list layout */
+.list .pi-item {
+  border-right: 0;
+}
+
+.list .title {
+  padding-top: 0;
+}
+
+.list.topics .title {
+  padding-bottom: 0;
+}
+
+.list:not(.topics) .pi-item .desc {
+  display: block;
+}
+
+/* quilt layout */
+.quilt.view {
+  display: inline-block;
+  height: 100%;
+  white-space: nowrap;
+  vertical-align: top;
+  font-size: 0;
+}
+
+.quilt #more {
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.quilt .box {
+  display: inline-block;
+  height: 100%;
+}
+
+.quilt .inner {
+  display: inline-block;
+  height: 100%;
+  vertical-align: top;
+  white-space: normal;
+}
+
+.quilt .one .pi-item {
+  width: 600px;
+  height: 70%;
+}
+
+.quilt .one .pi-item:last-child {
+  height: 30%;
+}
+
+.quilt .two .pi-item {
+  width: 300px;
+  height: 50%;
+}
+
+.quilt.topics .title {
+  position: absolute;
+  bottom: 12px;
+}
+
+.quilt .image {
+  height: 50%;
+}
+
+.quilt.topics .image {
+  height: 80%;
+}
+
+.quilt .one .pi-item .image {
+  height: 80%;
+}
+
+.quilt.topics .one .pi-item .image {
+  height: 90%;
+}
+
+.quilt .one .pi-item:last-child .image {
+  width: 350px;
+  height: 100%;
+  float: left;
+  margin-right: 10px;
+}
+
+.quilt .one .pi-item:last-child .title {
+  padding-top: 0;
+}
+
+.quilt.topics .one .pi-item:last-child .image {
+  width: 400px;
+}
+
+.quilt.topics .one .pi-item:last-child .title {
+  position: absolute;
+  top: 20px;
+  left: 440px;
+}
+
+.quilt .source {
+  position: absolute;
+  bottom: 20px;
+}
+
+.quilt .one .pi-item:last-child .source {
+  left: 380px;
+}
+ 
+/* grid layout */
+.grid .box {
+  /* to remove whitespace between inline blocks,
+     alternative is to use float: left */
+  font-size: 0;
+}
+
+.grid .inner {
+  display: inline-block;
+  width: 50%;
+}
+
+.grid .pi-item {
+  display: inline-block;
+  width: 50%;
+  height: 300px;
+  vertical-align: top;
+}
+
+.grid .image {
+  height: 130px;
+}
+
+.grid.topics .image {
+  height: 220px;
+}
+
+.grid .source {
+  position: absolute;
+  bottom: 12px;
+}
+
+.grid .two .pi-item:last-child {
+  border-right: 0;
+}
+
+/* stream layout */
+.stream .pi-item {
+  height: 240px;
+  border-right: 0;
+}
+
+.stream .image {
+  width: 200px;
+  height: 100%;
+  float: left;
+  margin-right: 20px;
+}
+
+.stream .title {
+  padding-top: 0;
+}
+
+.stream:not(.topics) .desc {
+  display: block;
+}
+
+.stream .source {
+  position: absolute;
+  left: 240px;
+  bottom: 20px;
+}
+
+/* small screen size e.g. phone */
+@media screen and (max-width: 800px) {
+  /* grid layout */
+  .grid .inner {
+    display: block;
+    width: 100%;
+  }
+  
+  .grid .pi-item:last-child {
+    border-right: 0;
+  }
+  
+  /* stream layout */
+  .stream .pi-item {
+    height: auto;
+  }
+  
+  .stream .image {
+    width: 100%;
+    height: 200px;
+    float: none;
+    margin: 0;
+  }
+  
+  .stream .title {
+    padding-top: 10px;
+  }
+  
+  .stream:not(.topics) .desc {
+    display: none;
+  }
+  
+  .stream .source {
+    position: static;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* grid layout */
+  .grid .pi-item {
+    padding: 10px;
+  }
+  
+  .grid.topics .pi-item {
+    height: 200px;
+  }
+  
+  .grid.topics .image {
+    height: 120px;
+  }
+  
+  .grid .image {
+    height: 80px;
+  }
+}

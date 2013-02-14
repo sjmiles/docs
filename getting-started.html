@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Getting started</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Toolkit platform code -->
+    <script src="toolkitchensink/toolkit/platform/platform.js"></script>
+
+    <!-- Load any components listed in YAML front matter. -->
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-component.html">
+      
+        <link rel="components" src="samples/components/basic-element.html">
+      
+        <link rel="components" src="samples/components/tk-element.html">
+      
+        <link rel="components" src="samples/components/tk-element-databinding-color.html">
+      
+        <link rel="components" src="samples/components/tk-element-databinding.html">
+      
+        <link rel="components" src="samples/components/tk-element-property.html">
+      
+        <link rel="components" src="samples/components/tk-element-ready.html">
+      
+        <link rel="components" src="samples/components/tk-element-property-public.html">
+      
+        <link rel="components" src="samples/components/tk-element-property-public-publish.html">
+      
+        <link rel="components" src="samples/components/tk-element-event-binding.html">
+      
+        <link rel="components" src="samples/components/tk-element-public-access.html">
+      
+        <link rel="components" src="samples/components/tk-node-finding.html">
+      
+        <link rel="components" src="samples/components/tk-twoway-binding.html">
+      
+        <link rel="components" src="samples/components/tk-binding-to-elements.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-panels.html">
+      
+        <link rel="components" src="toolkitchensink/toolkit/components/g-tabs.html">
+      
+
+    <!-- Load any style sheets listed in YAML front matter. -->
+      
+
+    <style type="text/css">
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+    }
+    .sidebar-nav {
+      padding: 9px 0;
+    }
+
+    </style>
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!--     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="css/pygments/default.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Code to change "active" style on selected left-hand navigation menu item. -->
+<script>
+  $(document).ready(function () {
+      $('ul.nav > li > a[href="' + document.location.pathname.substr(document.location.pathname.lastIndexOf("/")+1, document.location.pathname.length) + '"]').parent().addClass('active');
+    });
+</script>
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="index.html#">Toolkitchen Project</a>
+          <div class="nav-collapse collapse">
+<!--             <p class="navbar-text pull-right">
+              Logged in as <a href="http://twitter.github.com/bootstrap/examples/fluid.html#" class="navbar-link">Username</a>
+            </p> -->
+<!--
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="discuss.html">Discuss</a></li>
+            </ul>
+-->
+          <ul class="nav">
+  <li><a href="discuss.html">Discuss</a></li>
+</ul>
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+    <div class="well sidebar-nav affix">
+        <ul class="nav nav-list">
+            <li class="nav-header">Getting Started
+            </li>
+            <li>
+                <a href="index.html">Introduction</a>
+            </li>
+            <li>
+                <a href="getting-the-code.html">Get the code</a>
+            </li>
+            <li>
+                <a href="getting-started.html">Get started</a>
+            </li>
+            <li class="nav-header">Components
+            </li><!-- <li><a href="components.html">About Toolkit components</a></li> -->
+            <li>
+                <a href="toolkit-kernel-explainer.html">Toolkit kernel</a>
+<!--             </li>
+            <li>
+                <a href="component-reference.html">Component reference</a>
+            </li> -->
+            <li class="nav-header">More information
+            </li>
+            <li>
+                <a href="runtime-config.html">Runtime configuration options</a>
+            </li>
+            <li>
+                <a href="shadow-dom-shim.html">About the Shadow DOM shim</a>
+            </li>
+        </ul>
+    </div><!--well -->
+</div>
+        <div class="span7">
+            <h1>Getting started</h1>
+            <hr>
+            <h2>Basics</h2>
+
+<p>The basics of using Toolkitchen are simple:</p>
+
+<ol>
+<li>Load <strong>platform.js</strong> to shim missing platform features, such as as Shadow DOM.</li>
+<li>Load components with <code>&lt;link rel=&quot;components&quot; href=&quot;/path/to/component-file.html&gt;</code></li>
+<li>Use component tags in HTML.</li>
+</ol>
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="c">&lt;!-- 1. Shim missing platform features --&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="c">&lt;!-- 2. Load a component --&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;../components/g-menu-item.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="c">&lt;!-- 3. Instantiate the component with its tag. --&gt;</span>
+    <span class="nt">&lt;g</span><span class="na">-menu-item</span> <span class="na">src=</span><span class="s">&quot;images/email.svg&quot;</span><span class="nt">&gt;</span>Email Link<span class="err">&lt;</span>/g-menu-item&gt;
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+
+<h2> Components </h2>
+
+Components are the core building blocks of Toolkit-based applications. You create applications by assembling components together, either ones provided by the Toolkit or that you create yourself.
+
+<h3>Basic custom element</h3>
+
+The platform shims provided by Toolkitchen lets you load and display custom elements. Just by loading `platform.js` you
+
+<div class="row-fluid">
+  <div class="span8">
+<!-- Source tabs -->
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#element" data-toggle="tab">my-element.html</a></li>
+  <li><a href="#index" data-toggle="tab">index.html</a></li>
+</ul>
+
+<!-- Source tab content -->
+<div class="tab-content">
+  <div class="tab-pane active" id="element">
+    
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;my-element&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        This is <span class="nt">&lt;b&gt;</span>my-element<span class="nt">&lt;/b&gt;</span>. There are many like it, but this one is mine.
+    <span class="nt">&lt;/template&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+  </div>
+  <div class="tab-pane" id="index">
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="c">&lt;!-- Load custom element --&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;my-element.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="c">&lt;!-- Instantiate custom element --&gt;</span>
+    <span class="nt">&lt;my</span><span class="na">-element</span><span class="nt">&gt;</span><span class="err">&lt;</span>/my-element&gt;
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+  </div>
+</div>
+
+<p></div></p>
+
+<!-- Running sample -->
+
+<p><div class="span4">
+    <h5>Result</h5>
+    <div class="well">
+      <my-element></my-element>
+    </div>
+  </div>
+</div></p>
+
+<h3>Adding Toolkit features to a custom element</h3>
+
+<p>To enable a custom element with Toolkit features:</p>
+
+<ul>
+<li>Load the Toolkit kernel (<code>/toolkit/component/g-component.html</code>).</li>
+<li>Add a <code>&lt;script/&gt;</code> element that includes the <code>component()</code> initializer. THis endows the custom element with Toolkit features, such as data binding and event mapping.</li>
+</ul>
+
+<p>In the following sample we convert our basic custom element into a g-component named <code>tk-element</code>.</p>
+
+<div class="row-fluid">
+  <div class="span8">
+    <ul id="myTab" class="nav nav-tabs">
+      <li class="active"><a href="#element2" data-toggle="tab">tk-element.html</a></li>
+      <li><a href="#index2" data-toggle="tab">index.html</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="element2">
+    
+<div class="highlight"><pre><code class="html">    <span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tk-element&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;toolkit/src/g-component.html&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;template&gt;</span>
+            This is a <span class="nt">&lt;b&gt;</span>tk-element<span class="nt">&lt;/b&gt;</span>. Nothing visible has changed at this point, but now I have special powers.
+        <span class="nt">&lt;/template&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">();</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/element&gt;</span>
+    
+</code></pre></div>
+
+      </div>
+      <div class="tab-pane" id="index2">
+    
+<div class="highlight"><pre><code class="html">    <span class="cp">&lt;!DOCTYPE html&gt;</span>
+    <span class="nt">&lt;html&gt;</span>
+      <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;tk-element.html&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/head&gt;</span>
+      <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;tk</span><span class="na">-element</span><span class="nt">&gt;</span><span class="err">&lt;</span>/tk-element&gt;
+      <span class="nt">&lt;/body&gt;</span>
+    <span class="nt">&lt;/html&gt;</span>
+    
+</code></pre></div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="span4">
+    <h5>Result</h5>
+
+    <!-- Running sample -->
+    <div class="well">
+      <tk-element></tk-element>
+    </div>
+</div>
+
+<p></div></p>
+
+<h3>Add properties to our component</h3>
+
+<p>The <code>component()</code> initializer takes an object as a parameter whose members define the properties and methods that belong to our component.</p>
+
+<div class="row-fluid">
+  <div class="span8">
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#element4" data-toggle="tab">tk-element-property.html</a></li>
+  <li><a href="#index4" data-toggle="tab">index.html</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="element4">
+    
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tk-element-property&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;toolkit/src/g-component.html&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        This is a <span class="nt">&lt;b&gt;</span>tk-element<span class="nt">&lt;/b&gt;</span> with a (protected) property.
+    <span class="nt">&lt;/template&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+          <span class="nx">owner</span><span class="o">:</span> <span class="s2">&quot;Daniel&quot;</span>
+        <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+  </div>
+  <div class="tab-pane" id="index4">
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;tk-element-property.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;tk</span><span class="na">-element-property</span><span class="nt">&gt;</span><span class="err">&lt;</span>/tk-element-property&gt;
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+  </div>
+</div>
+
+<p></div></p>
+
+<div class="span4">
+  <!-- Running sample -->
+  <h5>Result</h5>
+  <div class="well">
+    <tk-element-property></tk-element-property>
+  </div>
+</div>
+
+<p></div></p>
+
+<p>Now that we&#39;ve added a property we can use data binding to display its value in the DOM.</p>
+
+<h2>Declarative data binding</h2>
+
+<p>You can bind properties in your component to  Toolkit supports declarative data binding using the &quot;double-mustache&quot; syntax (<code>{{}}</code>) from Model Driven Views. The <code>{{ }}</code> is replaced by the value of the property referenced between the brackets.</p>
+
+<div class="row-fluid">
+  <div class="span8">
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#element3" data-toggle="tab">tk-element-databinding.html</a></li>
+  <li><a href="#index3" data-toggle="tab">index.html</a></li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="element3">
+    
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tk-element-databinding&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;toolkit/src/g-component.html&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        This is a <span class="nt">&lt;strong&gt;</span>{{owner}}<span class="nt">&lt;/strong&gt;</span>&#39;s tk-element.
+    <span class="nt">&lt;/template&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+          <span class="nx">owner</span><span class="o">:</span> <span class="s2">&quot;Daniel&quot;</span>
+        <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+  </div>
+  <div class="tab-pane" id="index3">
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;tk-element-databinding.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;tk</span><span class="na">-element-databinding</span><span class="nt">&gt;</span><span class="err">&lt;</span>/tk-element-databinding&gt;
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+  </div>
+</div>
+
+<p></div></p>
+
+<!-- Running sample -->
+
+<div class="span4">
+  <h5>Result</h5>
+<div class="well">
+  <tk-element-databinding></tk-element-databinding>
+</div>
+
+<p></div>
+</div></p>
+
+<h3>Binding to markup</h3>
+
+<p>You can use binding expressions in most HTML markup, except for tag names themselves. In the following example, we create a new property on our component named <code>color</code> whose value is bound to the value of the <code>color</code> style applied to the custom element.</p>
+
+<!-- tk-element-databinding-color.html -->
+
+<div class="row-fluid">
+  <div class="span8">
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#element5" data-toggle="tab">tk-element-databinding-color.html</a></li>
+  <li><a href="#index5" data-toggle="tab">index.html</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="element5">
+    
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tk-element-databinding-color&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;toolkit/src/g-component.html&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        This is a <span class="nt">&lt;strong&gt;</span>{{owner}}<span class="nt">&lt;/strong&gt;</span>&#39;s tk-element. He likes the color <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;color: {{color}}&quot;</span><span class="nt">&gt;</span>{{color}}<span class="nt">&lt;/span&gt;</span>.
+    <span class="nt">&lt;/template&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+          <span class="nx">owner</span><span class="o">:</span> <span class="s2">&quot;Daniel&quot;</span><span class="p">,</span>
+          <span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;red&quot;</span>
+        <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+  </div>
+  <div class="tab-pane" id="index5">
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;tk-element-databinding-color.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;tk</span><span class="na">-element-databinding-color</span><span class="nt">&gt;</span><span class="err">&lt;</span>/tk-element-databinding-color&gt;
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+  </div>
+</div>
+
+<p></div></p>
+
+<p><div class="span4">
+  <h5>Result</h5>
+<div class="well">
+  <tk-element-databinding-color></tk-element-databinding-color>
+</div>
+</div>
+</div></p>
+
+<h3>Binding between components and native elements</h3>
+
+<p>The following example demonstrates binding component properties to attributes of native input elements.</p>
+
+<div class="row-fluid">
+  <div class="span8">
+<!-- Source tabs -->
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#element13" data-toggle="tab">tk-binding-to-elements.html</a></li>
+  <li><a href="#index13" data-toggle="tab">index.html</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="element13">
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tk-binding-to-elements&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        <span class="nt">&lt;p&gt;</span>This is a <span class="nt">&lt;strong&gt;</span>{{owner}}<span class="nt">&lt;/strong&gt;</span>&#39;s tk-element. He likes the color <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;color: {{color}}&quot;</span><span class="nt">&gt;</span>{{color}}<span class="nt">&lt;/span&gt;</span>. I am <span class="nt">&lt;strong&gt;</span>{{age}}<span class="nt">&lt;/strong&gt;</span> years old.<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;ageInput&quot;</span><span class="nt">&gt;</span>Age:<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;ageInput&quot;</span> <span class="na">type=</span><span class="s">&quot;range&quot;</span> <span class="na">value=</span><span class="s">&quot;{{age}}&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;nameInput&quot;</span><span class="nt">&gt;</span>Name:<span class="nt">&lt;/label&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;nameInput&quot;</span> <span class="na">value=</span><span class="s">&quot;{{owner}}&quot;</span> <span class="na">on-keyup=</span><span class="s">&quot;setName&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;Your name here...&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/template&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+            <span class="nx">age</span><span class="o">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+            <span class="nx">publish</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                <span class="nx">owner</span><span class="o">:</span> <span class="s2">&quot;Daniel&quot;</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+  </div>
+  <div class="tab-pane" id="index13">
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;tk-element.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;tk</span><span class="na">-element</span><span class="nt">&gt;</span><span class="err">&lt;</span>/tk-element&gt;
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+  </div>
+</div>
+
+<p></div></p>
+
+<div class="span4">
+  <!-- Running sample -->
+  <h5>Result</h5>
+<div class="well">
+  <tk-binding-to-elements></tk-binding-to-elements>
+</div>
+
+<p></div>
+</div></p>
+
+<h3>Adding a ready() lifecyle method</h3>
+
+<p>When a component has finished initializing itself, it calls its <code>ready</code> method, if it exists.</p>
+
+<div class="row-fluid">
+  <div class="span8">
+<!-- Tabs -->
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#element10" data-toggle="tab">tk-element-ready.html</a></li>
+  <li><a href="#index10" data-toggle="tab">index.html</a></li>
+</ul>
+
+<!-- Tab content -->
+<div class="tab-content">
+  <div class="tab-pane active" id="element10">
+    
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tk-element-ready&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        This is a <span class="nt">&lt;b&gt;</span>tk-element<span class="nt">&lt;/b&gt;</span> with a ready() method. <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;label&quot;</span><span class="nt">&gt;</span>Not ready...<span class="nt">&lt;/span&gt;</span>
+    <span class="nt">&lt;/template&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+          <span class="nx">ready</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">.</span><span class="nx">label</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="s2">&quot;label label-info&quot;</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">.</span><span class="nx">label</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="s2">&quot;Ready&quot;</span><span class="p">;</span>
+          <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+  </div>
+  <div class="tab-pane" id="index10">
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;tk-element-ready.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;tk</span><span class="na">-element-ready</span><span class="nt">&gt;</span><span class="err">&lt;</span>/tk-element-ready&gt;
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+  </div>
+</div>
+
+<p></div></p>
+
+<div class="span4">
+  <!-- Running sample -->
+  <h5>Result</h5>
+<div class="well">
+  <tk-element-ready></tk-element-ready>
+</div>
+
+<p></div>
+</div></p>
+
+<h2>Making properties public</h2>
+
+<p>By default, properties and methods you declare in the <code>component()</code> are in a protected scope&mdash;they aren&#39;t (directly) accessible outside of the component. Public properties can be exposed via data binding, or accessed directly on the element&#39;s JavaScript instance. </p>
+
+<p>There are two ways to make a property public:</p>
+
+<ul>
+<li>Add the property to the element&#39;s <code>attributes</code> attribute. This attribute takes a string of space-delimited strings that, at runtime, are converted into public properties on the component.</li>
+<li>Add the property to a <code>publish</code> block in the <code>component()</code> initializer object.</li>
+</ul>
+
+<h4>Using the &quot;attributes&quot; attribute</h4>
+
+<p>In the following example the defines an <code>attributes</code> attribute on the custom element whose value is the string <code>&quot;owner color&quot;</code>. </p>
+
+<div class="row-fluid">
+  <div class="span8">
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#element6" data-toggle="tab">tk-element-property-public.html</a></li>
+  <li><a href="#index6" data-toggle="tab">index.html</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="element6">
+    
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tk-element-property-public&quot;</span> <span class="na">attributes=</span><span class="s">&quot;owner color&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;toolkit/src/g-component.html&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        This is a <span class="nt">&lt;strong&gt;&lt;/strong&gt;</span>&#39;s tk-element. He likes the color <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;color: {{ color }}&quot;</span><span class="nt">&gt;</span>{{ color }}<span class="nt">&lt;/span&gt;</span>.
+    <span class="nt">&lt;/template&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+          <span class="nx">owner</span><span class="o">:</span> <span class="s2">&quot;Daniel&quot;</span><span class="p">,</span>
+          <span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;red&quot;</span>
+        <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+  </div>
+  <div class="tab-pane" id="index6">
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;tk-element-property-public.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- Make new component and specify values for new public properties. --&gt;</span>
+        <span class="nt">&lt;tk</span><span class="na">-element-property-public</span> <span class="na">owner=</span><span class="s">&quot;Scott&quot;</span> <span class="na">color=</span><span class="s">&quot;blue&quot;</span><span class="nt">&gt;</span>
+        <span class="err">&lt;</span>/tk-element-property-public&gt;
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+  </div>
+</div>
+
+<p></div></p>
+
+<div class="span4">
+  <!-- Running sample -->
+  <h5>Result</h5>
+  <div class="well">
+  <tk-element-property-public owner="Scott" color="blue"></tk-element-property-public>
+  </div>
+</div>
+
+<p></div></p>
+
+<h4>Using a publish block</h4>
+
+<p>This example is functionally equivalent to the previous version except that instead of using the <code>attributes</code> attribute to make the properties public, it moves them to the component&#39;s <code>publish</code> block.</p>
+
+<p>A public property declared in the <code>attributes</code> attribute is initially set to <code>undefined</code>. You can provide a more appropriate default value to the property in the comopnent&#39;s <code>publish</code> block, as shown below. </p>
+
+<div class="row-fluid">
+  <div class="span8">
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#element7" data-toggle="tab">tk-element-property-public-publish.html</a></li>
+  <li><a href="#index7" data-toggle="tab">index.html</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="element7">
+    
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tk-element-property-public-publish&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;toolkit/src/g-component.html&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        This is a <span class="nt">&lt;strong&gt;</span>{{owner}}<span class="nt">&lt;/strong&gt;</span>&#39;s tk-element. He likes the color <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;color: color&quot;</span><span class="nt">&gt;</span>}}<span class="nt">&lt;/span&gt;</span>.
+    <span class="nt">&lt;/template&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+            <span class="nx">publish</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                <span class="nx">owner</span><span class="o">:</span> <span class="s2">&quot;Daniel&quot;</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+  </div>
+  <div class="tab-pane" id="index7">
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;tk-element-property-public-publish.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tk</span><span class="na">-element-property-public-publish</span> <span class="na">owner=</span><span class="s">&quot;Alex&quot;</span> <span class="na">color=</span><span class="s">&quot;purple&quot;</span><span class="nt">&gt;</span>
+    <span class="err">&lt;</span>/tk-element-property-public-publish&gt;
+  <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+  </div>
+</div>
+
+<p></div></p>
+
+<h4>Result</h4>
+
+<!-- Live sample. -->
+
+<p><div class="span4">
+    <h5>Result</h5>
+    <div class="well">
+      <tk-element-property-public-publish owner="Alex" color="purple">
+      </tk-element-property-public-publish>
+    </div>
+</div></p>
+
+<p></div></p>
+
+<!-- ### Change watching ###
+
+You can also 
+ -->
+
+<h3>Accessing public properties on an component</h3>
+
+<p>A component&#39;s public properties can be accessed from its custom element, as shown below.</p>
+
+<!-- Sample code presented in Bootstrap tabs -->
+
+<!-- Tabs. One for each file in the sample. If you have multiple samples on the same page, make sure the hrefs for each <a> are unique or you'll get weird results.-->
+
+<div class="row-fluid">
+  <div class="span8">
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#element11" data-toggle="tab">tk-element-public-access.html</a></li>
+  <li><a href="#index11" data-toggle="tab">index.html</a></li>
+</ul>
+
+<!-- Tab contents -->
+<!-- IDs for each div must match the href value in the tab control above -->
+<div class="tab-content">
+  <div class="tab-pane active" id="element11">
+    
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tk-element-public-access&quot;</span> <span class="na">attributes=</span><span class="s">&quot;owner color&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;toolkit/src/g-component.html&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        This is a <span class="nt">&lt;strong&gt;&lt;/strong&gt;</span>&#39;s tk-element. He likes the color <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;color: {{ color }}&quot;</span><span class="nt">&gt;</span>{{ color }}<span class="nt">&lt;/span&gt;</span>.
+    <span class="nt">&lt;/template&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+          <span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+          <span class="nx">publish</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">owner</span><span class="o">:</span> <span class="s2">&quot;Joe Schmo&quot;</span>
+          <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+  </div>
+  <div class="tab-pane" id="index11">
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;tk-element-public-access.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- Make new component and specify values for new public properties. --&gt;</span>
+        <span class="nt">&lt;tk</span><span class="na">-element-public-access</span> <span class="na">owner=</span><span class="s">&quot;Scott&quot;</span> <span class="na">color=</span><span class="s">&quot;blue&quot;</span><span class="nt">&gt;</span>
+        <span class="err">&lt;</span>/tk-element-public-access&gt;
+        <span class="nt">&lt;script&gt;</span>
+          <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;WebComponentsReady&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;tk-element-public-access&#39;s owner is: &quot;</span> <span class="o">+</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;tk-element-public-access&quot;</span><span class="p">).</span><span class="nx">owner</span><span class="p">);</span>
+          <span class="p">});</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+  </div>
+</div>
+
+<p></div></p>
+
+<div class="span4">
+  <!-- Running sample -->
+  <h5>Result</h5>
+<div class="well">
+  <tk-element-public-access></tk-element-public-access>
+</div>
+
+<p></div>
+</div></p>
+
+<script>
+window.addEventListener("WebComponentsReady", function() {
+  console.log("tk-element-public-access's owner is: " + document.querySelector("tk-element-public-access").owner);
+});
+</script>        
+
+<h3>Automatic node finding</h3>
+
+<p>Shadow DOM is a self-contained document-like subtree; id’s in that subtree do not interact with id’s in other trees. Each g-component generates a map of id’s  to node references in the component’s template. This map is accessible as <code>this.$</code> to the component. </p>
+
+<div class="row-fluid">
+  <div class="span8">
+<!-- Source tabs -->
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#element12" data-toggle="tab">tk-node-finding.html</a></li>
+  <li><a href="#index12" data-toggle="tab">index.html</a></li>
+</ul>
+
+<!-- Source tab content -->
+<div class="tab-content">
+  <div class="tab-pane active" id="element12">
+    
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tk-node-finding&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        <span class="nt">&lt;p&gt;</span>This is a <span class="nt">&lt;strong&gt;&lt;/strong&gt;</span>&#39;s tk-element. He likes the color <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;color: &quot;</span><span class="nt">&gt;&lt;/span&gt;</span>.<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">on-click=</span><span class="s">&quot;setFocus&quot;</span><span class="nt">&gt;</span>Set focus to text input<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;nameInput&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/template&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+            <span class="nx">publish</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                <span class="nx">owner</span><span class="o">:</span> <span class="s2">&quot;Daniel&quot;</span>
+            <span class="p">},</span>
+            <span class="nx">setFocus</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">.</span><span class="nx">nameInput</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+  </div>
+  <div class="tab-pane" id="index12">
+
+<div class="highlight"><pre><code class="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../platform/platform.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="c">&lt;!-- Load custom element --&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;components&quot;</span> <span class="na">href=</span><span class="s">&quot;tk-node-finding.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="c">&lt;!-- Instantiate custom element --&gt;</span>
+    <span class="nt">&lt;tk</span><span class="na">-node-finding</span><span class="nt">&gt;</span><span class="err">&lt;</span>/tk-node-finding&gt;
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+
+  </div>
+</div>
+
+<p></div></p>
+
+<div class="span4">
+  <!-- Running sample -->
+  <h5>Result</h5>
+<div class="well">
+  <tk-node-finding owner="Scott" color="blue"></tk-node-finding>
+</div>
+
+<p></div>
+</div></p>
+
+        </div>
+      </div><!--/row-->
+      <hr>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./index_files/jquery.js"></script>
+    <script src="./index_files/bootstrap-scrollspy.js"></script>
+</body></html>

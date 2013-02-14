@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Toolkit kernel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style type="text/css">
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+    }
+    .sidebar-nav {
+      padding: 9px 0;
+    }
+    </style>
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!--     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="css/pygments/default.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Code to change "active" style on selected left-hand navigation menu item. -->
+<script>
+  $(document).ready(function () {
+
+      $('ul.nav > li > a[href="' + document.location.pathname.substr(document.location.pathname.lastIndexOf("/")+1, document.location.pathname.length) + '"]').parent().addClass('active');
+
+      function getFileName() {
+
+      }
+
+    });
+</script>
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="index.html#">Toolkitchen Project</a>
+          <div class="nav-collapse collapse">
+<!--             <p class="navbar-text pull-right">
+              Logged in as <a href="http://twitter.github.com/bootstrap/examples/fluid.html#" class="navbar-link">Username</a>
+            </p> -->
+<!--
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="discuss.html">Discuss</a></li>
+            </ul>
+-->
+          <ul class="nav">
+  <li><a href="discuss.html">Discuss</a></li>
+</ul>
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+    <div class="well sidebar-nav affix">
+        <ul class="nav nav-list">
+            <li class="nav-header">Getting Started
+            </li>
+            <li>
+                <a href="index.html">Introduction</a>
+            </li>
+            <li>
+                <a href="getting-the-code.html">Get the code</a>
+            </li>
+            <li>
+                <a href="getting-started.html">Get started</a>
+            </li>
+            <li class="nav-header">Components
+            </li><!-- <li><a href="components.html">About Toolkit components</a></li> -->
+            <li>
+                <a href="toolkit-kernel-explainer.html">Toolkit kernel</a>
+<!--             </li>
+            <li>
+                <a href="component-reference.html">Component reference</a>
+            </li> -->
+            <li class="nav-header">More information
+            </li>
+            <li>
+                <a href="runtime-config.html">Runtime configuration options</a>
+            </li>
+            <li>
+                <a href="shadow-dom-shim.html">About the Shadow DOM shim</a>
+            </li>
+        </ul>
+    </div><!--well -->
+</div>
+        <div class="span7">
+            <h1>Toolkit kernel</h1>
+            <hr>
+            <p>The Toolkit <em>kernel</em> provides a thin layer of code that expresses the Toolkit opinion, and provides the sugar that all components use. The kernel code is provided by a file named <code>g-component.html</code>. A web component that depends on the Toolkit kernel is called a <em>g-component</em>.</p>
+
+<h2>Component declaration</h2>
+
+<hr>
+
+<p>A web component declaration look like the following:</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tag-name&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        <span class="c">&lt;!-- shadow DOM here --&gt;</span>
+    <span class="nt">&lt;/template&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="c1">// lifecycle setup here</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+<p>To have this component  this component <code>component()</code> lifecycle initializer to the component&#39;s <code>&lt;script/&gt;</code> block, as shown below:</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;tag-name&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;template&gt;</span>
+    <span class="c">&lt;!-- shadow DOM here --&gt;</span>
+  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">();</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+  
+
+<p>Note the following:</p>
+
+<ul>
+<li>The <code>component()</code> initializer is all that&#39;s required to  prepare this component to use Toolkit <a href="#features">conventions and features</a>. </li>
+<li>The &quot;name&quot; attribute of <code>&lt;element/&gt;</code> determines the name of the custom element you use to instantiate the component (<code>&lt;tag-name/&gt;</code>, for example).</li>
+</ul>
+
+<h3>Component initializer</h3>
+
+<p>You can supply a single object-valued argument to <code>component()</code> to define object prototypes, and perform other setup tasks. Most properties and methods defined in the argument to <code>component()</code> are used directly in the component&#39;s prototype. In the following example the component initializer defines a property <code>helloWorld</code> and a method <code>ready</code>. </p>
+
+<div class="highlight"><pre><code class="javascript"><span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+  <span class="nx">message</span><span class="o">:</span> <span class="s2">&quot;Hallo!&quot;</span><span class="p">,</span>
+  <span class="nx">ready</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// component is ready now, we can do stuff</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>A component&#39;s <code>ready</code> method, if it exists, is called when the component is ready for it to be used.</p>
+
+<h2>Protected and public API surfaces</h2>
+
+<p>G-components have <em>public</em> and <em>protected</em> aspects. The public aspect represents the API that is visible and accessible directly from a component (element) instance. The protected aspect contains the API of which component users shouldn&#39;t need to be aware, such as event handlers or internal methods.</p>
+
+<h3>Protected properties</h3>
+
+<p>Properties and methods supplied to the <code>component</code> initializer  become properties on the component&#39;s <em>protected</em> interface. In the following example, the initializer declares two protected properties: <code>clickColor</code> and a method <code>clickHandler</code>. </p>
+
+<div class="highlight"><pre><code class="javascript"><span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+  <span class="nx">clickColor</span><span class="o">:</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span>
+  <span class="nx">clickHandler</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">clickColor</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>Note that the <code>clickHandler</code> method runs in the protected scope; it uses <code>this</code> which resolves to the component&#39;s protected scope.</p>
+
+<p>Typically, the consumer of a component only needs to deal with the public scope. The exception to this rule is when we need to operate on our node itself, we do this using the <code>this.node</code> reference, as shown in the example.</p>
+
+<h3>Public properties</h3>
+
+<p>To make a property or method public, you &quot;publish&quot; it by placing it inside a <code>publish</code> object block:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+  <span class="nx">clickColor</span><span class="o">:</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span>
+  <span class="nx">clickHandler</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">clickColor</span><span class="p">;</span>
+  <span class="p">},</span>
+  <span class="nx">publish</span><span class="o">:</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">clickColor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>To make a <code>blueify</code> method that is callable on the node (public), we <em>publish</em> the method by placing it inside a <code>publish</code> object:</p>
+
+<p>For example, let&#39;s say our design for the <em>my-tag</em> element calls for a method that can turn the element text blue, so a user could do like so:</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">myTag</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;my-tag&quot;</span><span class="p">);</span>
+<span class="nx">myTag</span><span class="p">.</span><span class="nx">blueify</span><span class="p">();</span>
+</code></pre></div>
+
+<p>The <code>blueify</code> method is a part of <em>my-tag</em>&#39;s public API. It must be available to end-users on the element instance.</p>
+
+<p>Now, imagine <em>my-tag</em> is also supposed to turn orange if clicked. As part of our set-up, we attach a <code>click</code> listener to a method called <code>clickHandler</code> which turns the element orange.</p>
+
+<p>In this case, <code>clickHandler</code> is not intended to be called by end-users, it&#39;s only there to service an event. In this case, <code>clickHandler</code> should be part of the protected API. Then the method is not visible on the element instance and calling</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="nx">myTag</span><span class="p">.</span><span class="nx">clickHandler</span><span class="p">();</span> <span class="c1">// error: undefined function </span>
+</code></pre></div>
+
+<p>Note the following:</p>
+
+<ol>
+<li>There can be only one <code>publish</code> block per definition.</li>
+<li>Published properties are actually stored on the <strong>protected</strong> prototype, then they are forwarded to the public prototype. In other words, <code>blueColor</code> is different from <code>clickColor</code> only because there is a public getter/setter pair to access it.</li>
+<li>Published methods still operate in protected scope: the properties you can access via <code>this</code> are no different from methods declared outside the publish block. </li>
+</ol>
+
+<p>Bottom line: when building components use <code>this</code> naturally and declare properties and methods as you like. Then, if you happen to create API you want to make public, you just move it into the <code>publish</code> block.</p>
+
+<h2>G-component features</h2>
+
+<p>This section describes the features of g-components. </p>
+
+<h2>Attributes and properties</h2>
+
+<p>Another Toolkit convention is that public properties are settable by attribute. For example, we could instantiate the <code>name-tag</code> component and set its public properties with the following:</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;name</span><span class="na">-tag</span> <span class="na">myname=</span><span class="s">&quot;Steve&quot;</span> <span class="na">nameColor=</span><span class="s">&quot;tomato&quot;</span><span class="nt">&gt;</span><span class="err">&lt;</span>/name-tag&gt;
+</code></pre></div>
+
+<p>When <code>name-tag</code> is created, or when its attributes change value, those new values are reflected into their matching component properties. </p>
+
+<p>Remember that only <em>public</em> properties are settable via attribute.</p>
+
+<h3>Declaring public properties as attributes</h3>
+
+<p>You can also declare public properties directly on an <code>&lt;element/&gt;</code> tag using its <code>attributes</code> attribute. For example:</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;name-tag&quot;</span> <span class="na">attributes=</span><span class="s">&quot;myName nameColor&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;template&gt;</span>
+    Hello! My name is <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;color:&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+      <span class="nx">nameColor</span><span class="o">:</span> <span class="s2">&quot;orange&quot;</span>
+    <span class="p">});</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+<p>In this case, <code>name-tag</code> declares two attributes (<code>myName</code> and <code>nameColor</code>). This is semantically the same as declaring them in a publish block. Note that properties declared as attributes default to &#39;undefined&#39; unless defaults are set in the prototype, as done for <code>nameColor</code> in the above example.</p>
+
+<h4>Binding and custom attributes</h4>
+
+<p>Toolkit makes it possible to bind references between components via attributes. Generally, attributes are only string-valued, so the binding engine interprets reference bindings specially (in particular, interrogating an attribute for a bound reference property will just return the binding expression (the double-mustache).</p>
+
+<p>Let&#39;s modify our <code>name-tag</code> to take a record instead of individual properties.</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;name-tag&quot;</span> <span class="na">attributes=</span><span class="s">&quot;person&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;template&gt;</span>
+    Hello! My name is <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;color:{{person.nameColor}}&quot;</span><span class="nt">&gt;</span>{{person.name}}<span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+      <span class="nx">person</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Scott&quot;</span><span class="p">,</span>
+        <span class="nx">nameColor</span><span class="o">:</span> <span class="s2">&quot;orange&quot;</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+<p>Now, imagine we make a new component called &#39;visitor-creds&#39; that uses <code>name-tag</code>:</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;visitor-creds&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;template&gt;</span>
+    <span class="nt">&lt;name</span><span class="na">-tag</span> <span class="na">person=</span><span class="s">&quot;{{person}}&quot;</span><span class="nt">&gt;</span><span class="err">&lt;</span>/name-tag&gt;
+  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+      <span class="nx">person</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Scott&quot;</span><span class="p">,</span>
+        <span class="nx">nameColor</span><span class="o">:</span> <span class="s2">&quot;orange&quot;</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+<p>When I make an instance of <code>visitor-creds</code>, its <code>person</code> object is bound to the <code>name-tag</code> instance, so now both components are using the same <code>person</code> object.</p>
+
+<h3>Declarative event mapping</h3>
+
+<p>Toolkit supports declarative binding of events to methods in the component. The toolkit uses special <code>on-<em>event</em></code> syntax to trigger this binding behavior.</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;g-cool&quot;</span> <span class="na">on-keypress=</span><span class="s">&quot;keypress&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;template&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">on-click=</span><span class="s">&quot;buttonClick&quot;</span><span class="nt">&gt;&lt;/button&gt;</span>
+  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+      <span class="nx">keypress</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">},</span>
+      <span class="nx">buttonClick</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+<p>In this example, the <code>on-keypress</code> declaration maps the standard DOM <code>&quot;keypress&quot;</code> event to the <code>keypress</code> method in the component. Within the component template, the <code>on-click</code> declaration maps a custom <code>buttonClick</code> event to the <code>buttonClick</code> method in the component. This is achieved again without the need for any glue code. </p>
+
+<p>Some things to notice:</p>
+
+<ul>
+<li>The value of an event handler attribute is the string name of a method on the component. Unlike traditional syntax, you cannot put executable code in the attribute.</li>
+<li>The event handler is passed the following arguments:
+
+<ul>
+<li><code>inEvent</code> is the <a href="http://www.w3.org/TR/DOM-Level-3-Events/#interface-Event">standard event object</a>.</li>
+<li><code>inDetail</code>: A convenience form of <code>inEvent.detail</code>.</li>
+<li><code>inSender</code>: A reference to the node that declared the handler. This is often different from <code>inEvent.target</code> (the lowest node that received the event) and <code>inEvent.currentTarget</code> (the component processing the event), so the Toolkit provides it directly.</li>
+</ul></li>
+</ul>
+
+<h3>Manageable API Surface</h3>
+
+<p>G-component API is not public by default. Only API declared in the <code>publish</code> block is part of the public surface. This way, users of a component need not contend with internal properties or event handlers.</p>
+
+<p><element name="g-cool">
+  <script>
+    this.component({
+      better: &#39;better&#39;,
+      publish: {
+        makeBetterBest: function() {
+          this.better = &#39;best&#39;;
+        }
+      }
+    });
+  </script>
+</element></p>
+
+<p>In this example, the <code>g-cool</code> component has a single public method, 
+<code>makeBetterBest</code>. The property _better _is not visible on the node, but a user could call <code>node.makeBetterBest</code> to set the internal property to the string value &#39;best&#39;. </p>
+
+<p>This property hiding is not for security (non-public properties are technically still available, they are just not surfaced). We hide properties only to simplify the API surface.</p>
+
+<p>The non-public API of a g-component is inherited by subclasses (extensions). For this reason, we call the non-public API <em>protected _(and not _private</em>).</p>
+
+<h2>Advanced sugaring</h2>
+
+<p>In addition to the above features, which are focused around making the core functionality of components simple and easy to use, the toolkit provides syntactical sugar that makes more advanced component features easy to create.</p>
+
+<h3>Change watchers</h3>
+
+<p>All properties on a g-component can be watched for changes by implementing a <code><em>propertyName</em>Changed</code> handler. When the value of a watched property changes, the appropriate chnage handler is automatically invoked. </p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;g-cool&quot;</span> <span class="na">attributes=</span><span class="s">&quot;better&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+      <span class="nx">plain</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+      <span class="nx">publish</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">best</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+      <span class="p">},</span>
+      <span class="nx">betterChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">inOldValue</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">},</span>
+      <span class="nx">bestChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">inOldValue</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+<p>In this example, there are two watched properties, <code>better</code> and <code>best</code>. The <code>betterChanged</code> and <code>bestChanged</code> function will be called whenever <code>better</code> or <code>best</code> are modified, respectively. </p>
+
+<h3>Automatic node finding</h3>
+
+<p>Another useful feature of Toolkit is node reference marshalling. Every node in a component&#39;s shadow DOM that is tagged with an <code>id</code> attribute is automatically referenced in components <code>this.$</code> hash. </p>
+
+<p>For example, the following defines a g-component whose template contains an <code>&lt;input&gt;</code> element whose <code>id</code> attribute is <code>nameInput</code>. The component can refer to the that element with the expression <code>this.$.nameInput</code>.</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;x-form&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;template&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;nameInput&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+      <span class="nx">logNameValue</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">.</span><span class="nx">nameInput</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+<h3>Calling inherited methods with $super</h3>
+
+<p>A g-component can extend a parent g-component by calling the parent&#39;s inherited methods. </p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;g-cooler&quot;</span> <span class="na">extends=</span><span class="s">&quot;g-cool&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">component</span><span class="p">({</span>
+      <span class="nx">moarBetter</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">$super</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">better</span> <span class="o">+=</span> <span class="s1">&#39;even more.&#39;</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</code></pre></div>
+
+<p>In this example, <code>this.$super</code> returns a reference to the parent, which is a <code>g-cool</code> g-component. In <code>g-cooler</code> the value of <code>better</code> contains the value of <code>g-cool</code> is, plus the string &#39;even more&#39;.</p>
+
+        </div>
+      </div><!--/row-->
+      <hr>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./index_files/jquery.js"></script>
+    <script src="./index_files/bootstrap-scrollspy.js"></script>
+</body></html>

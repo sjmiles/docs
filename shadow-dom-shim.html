@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>About the Shadow DOM shim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style type="text/css">
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+    }
+    .sidebar-nav {
+      padding: 9px 0;
+    }
+    </style>
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!--     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="css/pygments/default.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Code to change "active" style on selected left-hand navigation menu item. -->
+<script>
+  $(document).ready(function () {
+
+      $('ul.nav > li > a[href="' + document.location.pathname.substr(document.location.pathname.lastIndexOf("/")+1, document.location.pathname.length) + '"]').parent().addClass('active');
+
+      function getFileName() {
+
+      }
+
+    });
+</script>
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="index.html#">Toolkitchen Project</a>
+          <div class="nav-collapse collapse">
+<!--             <p class="navbar-text pull-right">
+              Logged in as <a href="http://twitter.github.com/bootstrap/examples/fluid.html#" class="navbar-link">Username</a>
+            </p> -->
+<!--
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="discuss.html">Discuss</a></li>
+            </ul>
+-->
+          <ul class="nav">
+  <li><a href="discuss.html">Discuss</a></li>
+</ul>
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+    <div class="well sidebar-nav affix">
+        <ul class="nav nav-list">
+            <li class="nav-header">Getting Started
+            </li>
+            <li>
+                <a href="index.html">Introduction</a>
+            </li>
+            <li>
+                <a href="getting-the-code.html">Get the code</a>
+            </li>
+            <li>
+                <a href="getting-started.html">Get started</a>
+            </li>
+            <li class="nav-header">Components
+            </li><!-- <li><a href="components.html">About Toolkit components</a></li> -->
+            <li>
+                <a href="toolkit-kernel-explainer.html">Toolkit kernel</a>
+<!--             </li>
+            <li>
+                <a href="component-reference.html">Component reference</a>
+            </li> -->
+            <li class="nav-header">More information
+            </li>
+            <li>
+                <a href="runtime-config.html">Runtime configuration options</a>
+            </li>
+            <li>
+                <a href="shadow-dom-shim.html">About the Shadow DOM shim</a>
+            </li>
+        </ul>
+    </div><!--well -->
+</div>
+        <div class="span7">
+            <h1>About the Shadow DOM shim</h1>
+            <hr>
+            <p>Toolkitchen uses a shim to provide Shadow DOM functionality. This document explains how a proper (native) implementation differs from the shim implementation provided by Toolkitchen.</p>
+
+<h2>About Shadow DOM subtrees</h2>
+
+<p>Shadow DOM allows a single node to express three subtrees: <em>light DOM</em>, <em>shadow DOM</em>, and <em>composed DOM</em>. A component user supplies the light DOM; the node has a (hidden) shadow DOM; and the composed DOM is what is actually rendered in the browser. At render time, the light DOM is merged with the shadow DOM to produce the composed DOM. For example:</p>
+
+<p><strong>Light DOM</strong></p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;custom</span><span class="na">-node</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- everything in here is custom-node&#39;s light DOM --&gt;</span>
+    <span class="nt">&lt;q&gt;</span>Hello World<span class="nt">&lt;/q&gt;</span>
+<span class="err">&lt;</span>/custom-node&gt;
+</code></pre></div>
+
+<p><strong>Shadow DOM</strong></p>
+
+<div class="highlight"><pre><code class="html"><span class="c">&lt;!-- shadow-root is attached to custom-node, but is not a child--&gt;</span>
+<span class="nt">&lt;shadow</span><span class="na">-root</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- everything in here is custom-node&#39;s shadow DOM --&gt;</span>
+    <span class="nt">&lt;span&gt;</span>People say: <span class="nt">&lt;content&gt;&lt;/content&gt;&lt;/span&gt;</span>
+<span class="err">&lt;</span>/shadow-root&gt;
+</code></pre></div>
+    
+
+<p><strong>Composed (rendered) DOM</strong></p>
+
+<div class="highlight"><pre><code class="html"><span class="c">&lt;!-- rendered DOM --&gt;</span>
+<span class="nt">&lt;custom</span><span class="na">-node</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;span&gt;</span>People say: <span class="nt">&lt;q&gt;</span>Hello World<span class="nt">&lt;/q&gt;&lt;/span&gt;</span>
+<span class="err">&lt;</span>/custom-node&gt;
+</code></pre></div>
+
+<p>Under a proper (native) Shadow DOM implementation, the following would be true about this example:</p>
+
+<ul>
+<li>The light DOM that belongs to <code>&lt;custom-node&gt;</code> is visible to the user as its normal subtree. It can expressed by <code>childNodes</code>, <code>children</code>, <code>innerHTML</code> or any other property or method that gives you information about a node&#39;s subtree.</li>
+<li>Nodes in light DOM or shadow DOM express parent and sibling relationships that match their respective tree structures; the relationships that exist in the rendered tree are not expressed anywhere in DOM.</li>
+</ul>
+
+<p>So, while in the final rendered tree <code>&lt;span&gt;</code> is a child of <code>&lt;custom-node&gt;</code> and the parent of <code>&lt;q&gt;</code>, interrogating those nodes will tell you that the <code>&lt;span&gt;</code> is a child of <code>&lt;shadow-root&gt;</code> and <code>&lt;q&gt;</code> is a child of <code>&lt;custom-node&gt;</code>, and that those two nodes are unrelated.</p>
+
+<p>In this way, the user can manipulate light DOM or shadow DOM directly as regular DOM subtrees, and let the system take care of keeping the render tree synchronized.</p>
+
+<h2>Shadow DOM shim limitations</h2>
+
+<p>To polyfill Shadow DOM it&#39;s necessary to compose the rendered tree into the DOM proper, as that is what the browser is going to display. That means the truisms above no longer apply. There are several important differences to consider under a polyfilled Shadow DOM:</p>
+
+<ul>
+<li><code>&lt;custom-node&gt;</code>&#39;s light DOM must be stored in a subtree separate from main DOM. <code>&lt;custom-node&gt;</code>&#39;s native <code>childNodes</code>, <code>children</code>, <code>innerHTML</code> properties and methods all refer to the rendered tree.</li>
+<li>Nodes in light DOM or shadow DOM express native parent and sibling relationships that match only the rendered tree structure; the relationships that exist in the original light and shadow trees are not expressed by native DOM.</li>
+</ul>
+
+<p>For proper polyfilling, these contradictions need to be solved by overriding the DOM tree accessors from JS to provide the illusion of the separated DOM trees. For this reason, Toolkit uses a Shadow DOM <em>shim</em> instead of a polyfill. </p>
+
+<blockquote>
+<p>We differentiate a <em>shim</em> from a <em>polyfill</em> in that a shim does the minimum work to make a technology function, whereas a polyfill needs to provide (as near as possible) to 100% compatibility with that technology.</p>
+</blockquote>
+
+<p>In particular, the Toolkit Shadow DOM shim does not provide the ability to operate on light and shadow subtrees as strictly normal DOM subtrees. Instead, those subtrees are embedded in the native (rendered) DOM and special APIs are provided to navigate them.</p>
+
+<h3>Subtree perversions</h3>
+
+<p>Using the native DOM accessors (such as <code>childNodes</code>) on a tree containing Shadow DOM shim subtrees, you will encounter these unusual DOM structures:</p>
+
+<ul>
+<li><p><strong>LightDOM</strong>: Nodes that have shadow DOM are assigned a corresponding <code>.lightDOM</code> document-fragment. When walking DOM, one generally wants to descend into light DOM subtrees (via <code>.lightDOM</code>) and not the native (rendered) tree, to mimic the proper hiding of shadow DOM.</p></li>
+<li><p><strong>Changelings</strong>: Changelings are &quot;dummy&quot; nodes that take the place of a real node, called the <code>baby</code>. A Changeling is created when a <code>baby</code> has to be moved into a composition. In other words, Changelings allow a node to be in multiple subtrees. </p></li>
+</ul>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;shadow</span><span class="na">-root</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;span</span><span class="na">-changeling</span><span class="nt">&gt;</span><span class="err">&lt;</span>/span-changeling&gt;
+<span class="err">&lt;</span>/shadow-root&gt;
+<span class="nt">&lt;custom</span><span class="na">-node</span><span class="nt">&gt;&lt;span&gt;</span>I&#39;m in two places at once<span class="nt">&lt;/span&gt;</span><span class="err">&lt;</span>/custom-node&gt;
+</code></pre></div>
+
+<p>When we interrogate <code>&lt;span-changeling&gt;</code>&#39;s <code>parentNode</code> property, it correctly references <code>&lt;shadow-root&gt;</code>. The Changeling has preserved the position of the <code>&lt;span&gt;</code> in the shadow DOM when the actual <code>&lt;span&gt;</code> had to be re-parented into the rendered tree. Being Changeling-aware, we can get non-positional information via <code>.baby</code>. For example, the real <code>innerText</code> is available via <code>baby.innerText</code>.</p>
+
+<ul>
+<li><strong>Insertion Lists</strong>: alternate child lists that represent subtrees before insertion-points are removed. </li>
+</ul>
+
+<p>Insertion-points, namely <code>&lt;content&gt;</code> and <code>&lt;shadow&gt;</code> are intended to be invisible to the render engine, for the purposes of, for example, parent/child selectors. A shadow DOM subtree like this:</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;content&gt;&lt;/content&gt;</span>
+</code></pre></div>
+
+<p>might compose with light DOM into </p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;custom</span><span class="na">-element</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;contesnt&gt;</span>
+        <span class="nt">&lt;span&gt;</span>Hello World<span class="nt">&lt;/span&gt;</span>
+    <span class="nt">&lt;/content&gt;</span>
+<span class="err">&lt;</span>/custom-element&gt;
+</code></pre></div>
+
+<p>but the render tree must see this as</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;custom</span><span class="na">-element</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;span&gt;</span>Hello World<span class="nt">&lt;/span&gt;</span>
+<span class="err">&lt;</span>/custom-element&gt;
+</code></pre></div>
+
+<p>In this case, an <code>.insertions</code> array is created on <code>&lt;custom-element&gt;</code> which contains the child list from the composed tree. In this case this contains simply <code>[&lt;content&gt;]</code>.</p>
+
+<h3>Locality</h3>
+
+<p>Because shadow DOM subtrees can be embedded in other shadow DOM subtrees, it quickly becomes possible for a node to be both in light and shadow DOM, depending on your perspective. Instead of having two kinds of trees, it&#39;s simpler to talk about a node&#39;s <em>local</em> tree. This way, my shadow DOM is just my <em>local</em> tree, and my light DOM is part of <em>my parentNode&#39;s</em> local tree. </p>
+
+<blockquote>
+<p>Note: By [specification], nodes distributed to insertion-points (<code>&lt;content&gt;</code>, <code>&lt;shadow&gt;</code>) are not considered part of the local tree, and must be studied separately via the <code>.getDistributedNodes()</code> function.</p>
+</blockquote>
+
+<h3>API Utilities</h3>
+
+<ul>
+<li><code>ShadowDOM.deref(inNode)</code>: dereference a Changeling: returns <code>inNode.baby</code> if it exists, otherwise <code>inNode</code>.</li>
+<li><code>ShadowDOM.localQuery[All](inNode, inSelector)</code>: a subset of <code>querySelector[All]</code> that searches the input node&#39;s local tree for nodes matching <code>inSelector</code> (for a restricted set of selectors).</li>
+<li><strong><code>ShadowDOM.localNodes(inNode)</code></strong>: returns a simple array of nodes at the top of inNode&#39;s local tree.</li>
+</ul>
+
+        </div>
+      </div><!--/row-->
+      <hr>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./index_files/jquery.js"></script>
+    <script src="./index_files/bootstrap-scrollspy.js"></script>
+</body></html>

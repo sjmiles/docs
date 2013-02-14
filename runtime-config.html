@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Runtime configuration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style type="text/css">
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+    }
+    .sidebar-nav {
+      padding: 9px 0;
+    }
+    </style>
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!--     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="css/pygments/default.css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Code to change "active" style on selected left-hand navigation menu item. -->
+<script>
+  $(document).ready(function () {
+
+      $('ul.nav > li > a[href="' + document.location.pathname.substr(document.location.pathname.lastIndexOf("/")+1, document.location.pathname.length) + '"]').parent().addClass('active');
+
+      function getFileName() {
+
+      }
+
+    });
+</script>
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="index.html#">Toolkitchen Project</a>
+          <div class="nav-collapse collapse">
+<!--             <p class="navbar-text pull-right">
+              Logged in as <a href="http://twitter.github.com/bootstrap/examples/fluid.html#" class="navbar-link">Username</a>
+            </p> -->
+<!--
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="discuss.html">Discuss</a></li>
+            </ul>
+-->
+          <ul class="nav">
+  <li><a href="discuss.html">Discuss</a></li>
+</ul>
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+    <div class="well sidebar-nav affix">
+        <ul class="nav nav-list">
+            <li class="nav-header">Getting Started
+            </li>
+            <li>
+                <a href="index.html">Introduction</a>
+            </li>
+            <li>
+                <a href="getting-the-code.html">Get the code</a>
+            </li>
+            <li>
+                <a href="getting-started.html">Get started</a>
+            </li>
+            <li class="nav-header">Components
+            </li><!-- <li><a href="components.html">About Toolkit components</a></li> -->
+            <li>
+                <a href="toolkit-kernel-explainer.html">Toolkit kernel</a>
+<!--             </li>
+            <li>
+                <a href="component-reference.html">Component reference</a>
+            </li> -->
+            <li class="nav-header">More information
+            </li>
+            <li>
+                <a href="runtime-config.html">Runtime configuration options</a>
+            </li>
+            <li>
+                <a href="shadow-dom-shim.html">About the Shadow DOM shim</a>
+            </li>
+        </ul>
+    </div><!--well -->
+</div>
+        <div class="span7">
+            <h1>Runtime configuration</h1>
+            <hr>
+            <h3>Configuration switches</h3>
+
+<p>Toolkit supports runtime options that are settable as attributes on the <code>&lt;script&gt;</code> tag that loads <code>platform.js</code>, or as URL query parameters.</p>
+
+<h4>log</h4>
+
+<p>Controls console output.</p>
+
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><code class="text">&lt;script src=&quot;platform/platform.js&quot; log=&quot;bind,ready&quot;&gt;&lt;/script&gt;
+</code></pre></div>
+<p>Or, equivalently:</p>
+<div class="highlight"><pre><code class="text">http://localhost/toolkitchen/toolkit/getting_started/?log=bind,ready
+</code></pre></div>
+<p>Possible values:</p>
+
+<table class="table">
+  <tr>
+    <th>Value</th><th>Description</th>
+  </tr>
+  <tr>
+    <td>bind</td><td>Setup actions performed by the data-binding engine.</td>
+  </tr>
+  <tr>
+    <td>data</td><td>Runtime data transforms that result from bindings</td>
+  </tr>
+  <tr>
+    <td>watch</td><td>Data change notifications</td>
+  </tr>
+  <tr>
+    <td>events</td><td>Custom event bindings and event propagations</td>
+  </tr>
+  <tr>
+    <td>ready</td><td>Custom element reaching a ready state</td>
+  </tr>
+</table>
+
+<h4>shadow</h4>
+
+<p>Selects a Shadow DOM implementation: shim, native, or experimental polyfill for non-WebKit browsers. Note that although Chrome 25 supports Shadow DOM natively, at this time the shim implementation is required to use Toolkit components.</p>
+
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><code class="text">&lt;script src=&quot;platform/platform.js&quot; shadow=&quot;shim&quot;&gt;&lt;/script&gt;
+</code></pre></div>
+<p>Possible attribute values:</p>
+
+<table class="table">
+  <tr>
+    <th>Value</th><th>Description</th>
+  </tr>
+  <tr>
+    <td>shim</td><td>Required for Toolkit components (default)</td>
+  </tr>
+  <tr>
+    <td>webkit</td><td>Native webkit implementation</td>
+  </tr>
+  <tr>
+    <td>polyfill</td><td>Experimental polyfill for non-WebKit browsers</td>
+  </tr>
+</table>
+
+<h4>eval</h4>
+
+<p>When <code>true</code>, component scripts are executed with <code>eval</code> instead of script tag injection. Default is <code>false</code>.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre><code class="text">&lt;script src=&quot;platform/platform.js&quot; eval=&quot;true&quot;&gt;&lt;/script&gt;
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><code class="text">http://localhost/toolkitchen/toolkit/getting_started/?eval
+</code></pre></div>
+        </div>
+      </div><!--/row-->
+      <hr>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./index_files/jquery.js"></script>
+    <script src="./index_files/bootstrap-scrollspy.js"></script>
+</body></html>
